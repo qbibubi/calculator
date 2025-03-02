@@ -5,9 +5,9 @@ section .rodata
 	second_input db "Second variable: ", 0h
 
 section .bss
-	first:	resb 32
-	second:	resb 32 
-	result:	resb 64
+	first:	resb 32 db 0
+	second:	resb 32 db 0
+	result:	resb 64 db 0
 
 section .text
 	global _start
@@ -28,8 +28,12 @@ _start:
 	mov rdi, first_input
 	call print
 
+	call input
+
 	mov rdi, second_input
 	call print
+
+	call input
 
 	mov rax, 0x3c
 	xor rdi, rdi
@@ -45,7 +49,7 @@ print:
 
 	mov rdx, rax
 	mov rsi, rdi
-	mov rdi, 1
+	mov rdi, 0x1
 	mov rax, 0x1
 	syscall
 	
@@ -53,17 +57,34 @@ print:
 	pop rbp
 	ret
 
+input:
+	push rbp
+	mov rbp, rsp,
+
+	push rdi
+
+	mov rdx, 0
+	mov rsi, buffer
+	mov rdi, 0x1
+	mov rax, 0x0
+	syscall
+
+	pop rbp
+	retn
+
 
 strlen:
 	push rbx
 	push rcx
 	mov rcx, 0
+
 .strlen_loop:
 	movzx rbx, byte [rdi+rcx]
 	test rbx, rbx
 	jz .strlen_loop_end
 	inc rcx 
 	jmp .strlen_loop
+
 .strlen_loop_end:
 	mov rax, rcx
 	pop rcx

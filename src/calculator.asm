@@ -1,13 +1,13 @@
 section .rodata
 	welcome_message db "Welcome to simple x86_64 assembly calculator", 0Ah, 0h
 	info_message db "This calculator supports simple mathematical operations ONLY on two operands", 0Ah, 0h
-	first_input db "First variable: " , 0h
+	first_input db "First variable: ", 0h
 	second_input db "Second variable: ", 0h
 
 section .bss
-	first:	resb 32 db 0
-	second:	resb 32 db 0
-	result:	resb 64 db 0
+	first:	resb 32
+	second:	resb 32
+	result:	resb 64
 
 section .text
 	global _start
@@ -64,7 +64,7 @@ input:
 	push rdi
 
 	mov rdx, 0
-	mov rsi, buffer
+	mov rsi, 0 
 	mov rdi, 0x1
 	mov rax, 0x0
 	syscall

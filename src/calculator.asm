@@ -28,12 +28,20 @@ _start:
 	mov rdi, first_input
 	call print
 
+	mov rdi, first
 	call input
 
 	mov rdi, second_input
 	call print
 
+	mov rdi, second
 	call input
+
+	mov rdi, first
+	call print
+
+	mov rdi, second
+	call print
 
 	mov rax, 0x3c
 	xor rdi, rdi
@@ -53,6 +61,7 @@ print:
 	mov rax, 0x1
 	syscall
 	
+	pop rdi
 	mov rsp, rbp
 	pop rbp
 	ret
@@ -63,12 +72,13 @@ input:
 
 	push rdi
 
-	mov rdx, 0
-	mov rsi, 0 
+	mov rdx, 32
+	mov rsi, rdi
 	mov rdi, 0x1
 	mov rax, 0x0
 	syscall
 
+	pop rdi
 	pop rbp
 	retn
 
